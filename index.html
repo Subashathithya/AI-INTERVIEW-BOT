@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Interview Bot</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-auth-compat.js"></script>
+  <!-- PDF.js for PDF parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <!-- Mammoth.js for DOCX parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+</head>
+<body>
+  <!-- Login Page -->
+  <div id="page1">
+    <h1>🎯 AI Interview Bot</h1>
+    <p style="color: #64748b; margin-bottom: 32px; font-size: 15px;">Practice and ace your technical interviews with AI-powered feedback</p>
+    <input type="email" id="loginEmail" placeholder="📧 Enter your email">
+    <input type="password" id="loginPassword" placeholder="🔒 Enter your password">
+    <button id="loginBtn">Login</button>
+    <button id="showSignupBtn">Sign Up</button>
+  </div>
+
+  <!-- Signup Page -->
+  <div id="signupPage" style="display:none;">
+    <h2>✨ Create Account</h2>
+    <p style="color: #64748b; margin-bottom: 24px; font-size: 14px;">Join thousands preparing for their dream job</p>
+    <input type="text" id="signupName" placeholder="👤 Full Name">
+    <input type="email" id="signupEmail" placeholder="📧 Email Address">
+    <input type="password" id="signupPassword" placeholder="🔒 Create Password">
+    <input type="password" id="confirmPassword" placeholder="🔒 Confirm Password">
+    <button id="signupBtn">Create Account</button>
+    <button id="backToLoginBtn">← Back to Login</button>
+  </div>
+
+  <!-- Option Page -->
+  <div id="page2" style="display: none;">
+    <h2>🚀 Ready to Start?</h2>
+    <p style="color: #64748b; margin-bottom: 32px; font-size: 15px;">Choose your path to interview success</p>
+    <button id="practiceBtn">📝 Practice Questions</button>
+    <button id="attendBtn">🎤 Attend Interview</button>
+  </div>
+
+  <!-- Interview Type Selection Page -->
+  <div id="interviewTypePage" style="display:none;">
+    <h2>📋 Choose Interview Type</h2>
+    <p style="color: #64748b; margin-bottom: 32px; font-size: 15px;">Select how you want to be interviewed</p>
+    <button id="viaDomainBtn">🎯 Via Domain</button>
+    <button id="viaResumeBtn">📄 Via Resume</button>
+    <button id="backToOptionsBtn">← Back</button>
+  </div>
+
+  <!-- Resume Upload Page -->
+  <div id="resumeUploadPage" style="display:none;">
+    <h2>📄 Upload Your Resume</h2>
+    <p style="color: #64748b; margin-bottom: 24px; font-size: 15px;">Upload your resume for a personalized interview experience</p>
+    <div style="margin: 24px 0;">
+      <input type="file" id="resumeFile" accept=".pdf,.doc,.docx,.txt" style="display: none;">
+      <label for="resumeFile" style="display: inline-block; padding: 14px 28px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); transition: all 0.3s ease;">📎 Choose File</label>
+      <p id="fileName" style="margin-top: 16px; color: #4a5568; font-size: 14px;">No file chosen</p>
+    </div>
+    <button id="uploadResumeBtn" style="display: none;">✅ Start Resume Interview</button>
+    <button id="backToTypeBtn">← Back</button>
+  </div>
+
+  <!-- Role Selection Page -->
+  <div id="page3" style="display:none;">
+    <h2>🎯 Select Your Domain</h2>
+    <p style="color: #64748b; margin-bottom: 28px; font-size: 15px;">Choose the area you want to be interviewed on</p>
+    <button class="roleBtn">🧪 Software Testing</button>
+    <button class="roleBtn">☕ Java Development</button>
+    <button class="roleBtn">💻 Full Stack Development</button>
+    <button class="roleBtn">📱 Android Development</button>
+    <button class="roleBtn">🏗 System Design</button>
+    <button class="roleBtn">📊 Data Science / ML</button>
+    <button class="roleBtn">🤖 Artificial Intelligence</button>
+    <button class="roleBtn">☁ Cloud Computing</button>
+    <button class="roleBtn">🔐 Cybersecurity</button>
+    <button class="roleBtn">🔄 DevOps & CI/CD</button>
+    <button class="roleBtn">🗄 Database Management</button>
+    <button class="roleBtn">🎨 UI/UX Design</button>
+    <button class="roleBtn">🌐 Networking & OS</button>
+    <button class="roleBtn">⚡ Embedded Systems / IoT</button>
+    <button class="roleBtn">⛓ Blockchain Development</button>
+  </div>
+
+  <!-- Interview Page -->
+  <div id="interviewPage" style="display:none;">
+    <h2>🎙 Interview in Progress</h2>
+    <p style="color: #64748b; margin-bottom: 20px; font-size: 14px;">Listen carefully and answer confidently</p>
+    <p id="question"></p>
+    <button id="startTalking">🎤 Answer via Voice</button>
+    <button id="stopInterview">⏹ Stop Interview</button>
+  </div>
+
+  <!-- Result Page -->
+  <div id="resultPage" style="display:none;">
+    <h2>🎉 Interview Completed!</h2>
+    <p style="color: #78350f; margin-bottom: 20px; font-size: 15px; font-weight: 500;">Here's your detailed performance report</p>
+    <div id="scoreCard"></div>
+    <div id="resultText"></div>
+    <button onclick="location.reload()">🔄 Start New Interview</button>
+  </div>
+
+  <!-- Resume Result Page -->
+  <div id="resumeResultPage" style="display:none;">
+    <h2>🎉 Resume Interview Completed!</h2>
+    <p style="color: #78350f; margin-bottom: 20px; font-size: 15px; font-weight: 500;">Here's your honesty & consistency report</p>
+    <div id="resumeScoreCard"></div>
+    <div id="resumeResultText"></div>
+    <button onclick="location.reload()">🔄 Start New Interview</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

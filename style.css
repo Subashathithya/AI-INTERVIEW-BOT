@@ -1,0 +1,339 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #1a202c;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    z-index: 0;
+}
+
+h1 {
+    color: #1a202c;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+h2 {
+    color: #2d3748;
+    font-size: 1.875rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    letter-spacing: -0.3px;
+}
+
+/* Input Fields */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 14px 18px;
+    margin: 10px 0;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background-color: #f7fafc;
+    color: #2d3748;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+    outline: none;
+    border-color: #667eea;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: translateY(-1px);
+}
+
+input::placeholder {
+    color: #a0aec0;
+}
+
+/* Buttons */
+button {
+    padding: 14px 28px;
+    margin: 8px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    position: relative;
+    overflow: hidden;
+    font-family: inherit;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+#showSignupBtn,
+#backToLoginBtn {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+}
+
+#showSignupBtn:hover,
+#backToLoginBtn:hover {
+    box-shadow: 0 6px 20px rgba(107, 114, 128, 0.4);
+}
+
+.roleBtn {
+    display: inline-block;
+    width: 240px;
+    margin: 10px;
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+    font-size: 14px;
+}
+
+.roleBtn:hover {
+    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4);
+}
+
+/* Page Containers */
+#page1, #page2, #page3, #interviewPage, #resultPage, #signupPage, #interviewTypePage, #resumeUploadPage, #resumeResultPage {
+    max-width: 520px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 48px 40px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.6s ease-out;
+    text-align: center;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#page1::before,
+#signupPage::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #667eea, #764ba2, #667eea);
+    border-radius: 24px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#page1:hover::before,
+#signupPage:hover::before {
+    opacity: 0.1;
+}
+
+/* Interview Page */
+#interviewPage {
+    max-width: 700px;
+}
+
+#interviewPage h2 {
+    font-size: 1.75rem;
+    margin-bottom: 24px;
+    color: #1a202c;
+}
+
+#question {
+    font-size: 17px;
+    line-height: 1.7;
+    margin: 24px 0;
+    color: #2d3748;
+    padding: 24px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 16px;
+    border: 2px solid #bae6fd;
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.1);
+    font-weight: 500;
+}
+
+/* Stop Interview Button */
+#stopInterview {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+#stopInterview:hover {
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+}
+
+#startTalking {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+#startTalking:hover {
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+/* Result Page */
+#resultPage, #resumeResultPage {
+    max-width: 750px;
+    background: rgba(255, 255, 255, 0.98);
+    border: none;
+}
+
+#scoreCard, #resumeScoreCard {
+    margin: 24px 0;
+    font-size: 16px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    padding: 32px;
+    border-radius: 16px;
+    border: 2px solid #bae6fd;
+    color: #1a202c;
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.15);
+}
+
+#resultText, #resumeResultText {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #2d3748;
+    background: transparent;
+    padding: 0;
+    border: none;
+    margin-top: 24px;
+    text-align: left;
+}
+
+/* Page 2 & 3 Specific */
+#page2 button,
+#page3 .roleBtn,
+#interviewTypePage button {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 12px auto;
+}
+
+#resumeUploadPage button {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 12px auto;
+}
+
+#page3 {
+    max-width: 800px;
+}
+
+#page3 .roleBtn {
+    display: inline-block;
+    width: calc(50% - 24px);
+    margin: 10px;
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    #page1, #page2, #page3, #interviewPage, #resultPage, #signupPage,
+    #interviewTypePage, #resumeUploadPage, #resumeResultPage {
+        padding: 32px 24px;
+        border-radius: 20px;
+    }
+
+    .roleBtn,
+    #page3 .roleBtn {
+        width: 100% !important;
+        margin: 8px 0;
+    }
+
+    button {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    #page2 button {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    #page1, #page2, #page3, #interviewPage, #resultPage, #signupPage,
+    #interviewTypePage, #resumeUploadPage, #resumeResultPage {
+        padding: 24px 20px;
+    }
+}
